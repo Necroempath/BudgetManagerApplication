@@ -2,6 +2,8 @@ import { defineDateRange } from "../utils.js";
 
 const form = document.querySelector("#filterForm");
 
+const canvas = new bootstrap.Offcanvas(document.querySelector('#offcanvasExample'));
+
 const clearFormBtn = document.querySelector("#clearForm");
 const resetFiltersBtn = document.querySelector("#resetFilters");
 const applyFiltersBtn = document.querySelector("#applyFilters");
@@ -35,10 +37,14 @@ export function initFilterHandler(currencies, onFilterApplied) {
       dateTo: data.get("dateTo"),
     };
 
+    canvas.hide();
+
     onFilterApplied(filterParams);
   });
 
   resetFiltersBtn.addEventListener("click", () => {
+    canvas.hide();
+    
     onFilterApplied(null);
   });
 }
@@ -74,11 +80,11 @@ function createCurrencyInputs(currencies) {
 function validate() {
   let valid = true;
 
-  const minAmountInput = document.getElementById("minAmount");
-  const maxAmountInput = document.getElementById("maxAmount");
+  const minAmountInput = document.querySelector("#minAmount");
+  const maxAmountInput = document.querySelector("#maxAmount");
 
-  const minAmount = document.getElementById("minAmount").value || 0;
-  const maxAmount = document.getElementById("maxAmount").value || Infinity;
+  const minAmount = document.querySelector("#minAmount").value || 0;
+  const maxAmount = document.querySelector("#maxAmount").value || Infinity;
 
   minAmountInput.classList.remove("is-invalid");
   maxAmountInput.classList.remove("is-invalid");
@@ -90,10 +96,10 @@ function validate() {
     valid = false;
   }
 
-  const dateFrom = document.getElementById("dateFrom").value || new Date();
+  const dateFrom = document.querySelector("#dateFrom").value || new Date();
   const dateTo =
-    document.getElementById("dateTo").value || new Date(8640000000000000);
-  const dateToInput = document.getElementById("dateTo");
+    document.querySelector("#dateTo").value || new Date(8640000000000000);
+  const dateToInput = document.querySelector("#dateTo");
   dateToInput.classList.remove("is-invalid");
 
   if (dateTo < dateFrom) {

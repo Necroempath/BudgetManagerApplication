@@ -2,7 +2,7 @@ import { OperationForm } from "../UI/form.js";
 import { defineDateRange } from "../utils.js";
 import { categories } from "../Repositories/categories.js";
 
-export function CreateEditForm(onSubmit) {
+export function createEditForm(onSubmit) {
   const form = document.querySelector("#addForm").cloneNode(true);
   const editBtn = document.querySelector("#editBtn");
 

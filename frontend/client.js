@@ -8,8 +8,8 @@ import {
   loadCurrencies,
 } from "../backend/backend.js";
 import { showModal, hideModal } from "./UI/modal.js";
-import { CreateAddForm } from "./Services/operationAdder.js";
-import { CreateEditForm } from "./Services/operationEditor.js";
+import { createAddForm, resetAddForm } from "./Services/operationAdder.js";
+import { createEditForm } from "./Services/operationEditor.js";
 import {
   operations,
   setOperations,
@@ -48,9 +48,9 @@ function filterOperations(filtered) {
 
 let selectedCurrency;
 
-const addForm = CreateAddForm((form, formData) => onAdding(form, formData));
+const addForm = createAddForm((form, formData) => onAdding(form, formData));
 
-const editForm = CreateEditForm((form, formData) => onEdit(form, formData));
+const editForm = createEditForm((form, formData) => onEdit(form, formData));
 
 function setCurrencyFromCookie() {
   selectedCurrency = getCookie("currency");
@@ -93,7 +93,14 @@ setCurrencyFromCookie();
 refreshTable();
 
 function validate(form) {
+  const data = new FormData(form);
+  const cat = data.get('category');
+
   const valid = form.checkValidity();
+  //   if (!cat) {
+  //   valid = false;
+  //   console.log('inv cat')
+  // }
   if (!valid) {
     form.classList.add("was-validated");
   } else {
@@ -126,7 +133,7 @@ function onAdding(form, formData) {
     return;
   }
 
-  form.reset();
+  resetAddForm();
 
   const operation = JSON.parse(saveOperation(JSON.stringify(formData)));
   operations.push(operation);
@@ -205,8 +212,8 @@ function onFilterApplied(filterParams) {
     filtered = operations.filter((op) => op.type === filterParams.type);
   }
 
-  // filtered = filtered.filter(op => filterParams.currencies.includes(op.currency.code));
-
+  filtered = filtered.filter(op => filterParams.currencies.includes(op.currency.code));
+  console.log(filtered);
   // filtered = filtered.filter(op => op.amount >= filterParams.minAmount && op.amount <= filterParams.maxAmount);
 
   // filtered = filtered.filter(op => op.amount >= filterParams.minAmount && op.amount <= filterParams.maxAmount);

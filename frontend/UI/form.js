@@ -69,7 +69,6 @@ export class OperationForm {
     this.type.addEventListener("change", () => {
       this.category.disabled = false;
       this.#setOptions(categories[this.type.value]);
-      this.setDefaultOption("Choose category...");
     });
   }
 
@@ -92,14 +91,6 @@ export class OperationForm {
 
   enableCategoryOptions() {
     this.category.disabled = false;
-  }
-
-  setDefaultOption(option) {
-    const category = this.#setOption(option);
-    
-    category.selected = true;
-    category.hidden = true;
-    category.value = "";
   }
 
   limitDateInput(minDate, maxDate) {

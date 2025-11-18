@@ -15,17 +15,24 @@
 <body class="bg-light p-4">
     <header class="mb-4">
         <div class="container">
-            <menu class="d-flex gap-2">
-                <div class="dropdown">
-                    <button id="currencyDropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        class="btn btn-dark d-flex gap-2 align-items-center dropdown-toggle"><i
-                            class="fa-solid fa-globe fs-4"></i>
-                        <span id="selected-currency" class="fs-6 fw-semibold">AZN</span></button>
-                    <ul class="dropdown-menu bg-dark" id="currencyDropdown">
-                    </ul>
+            <menu class="row flex-nowrap justify-content-between">
+                <div class="col-auto d-flex flex-row gap-2">
+                    <div class="dropdown">
+                        <button id="currencyDropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                            class="btn btn-dark d-flex gap-2 align-items-center dropdown-toggle"><i
+                                class="fa-solid fa-globe fs-4"></i>
+                            <span id="selected-currency" class="fs-6 fw-semibold">AZN</span></button>
+                        <ul class="dropdown-menu bg-dark" id="currencyDropdown">
+                        </ul>
+                    </div>
+                    <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i
+                            class="fa-solid fa-filter text-white"></i></button>
                 </div>
-                <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-                    aria-controls="offcanvasExample"><i class="fa-solid fa-filter text-white"></i></button>
+                <div class="col-auto">
+                    <button class="btn btn-dark" type="file">Import</button> 
+                    <button class="btn btn-dark" type="file">Export</button> 
+                </div>
             </menu>
         </div>
     </header>
