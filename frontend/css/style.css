@@ -1,0 +1,75 @@
+.clickable {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.selectable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clickable:hover {
+    color: #6c757d !important;
+}
+
+.selectable:hover {
+    background-color: #fff !important;
+    color: #4d5154!important;
+}
+
+.sorter {
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.sorter:hover {
+    color: #ccc
+}
+
+tr:hover .clickable {
+    opacity: 1!important;
+}
+.dropdown-menu {
+    min-width: 0 !important;
+    
+}
+.fs-7 { font-size: .875rem }
+.fs-8 { font-size: .75rem }
+
+@media (min-width: 576px) {
+  .text-sm-8 { font-size: 0.75rem; }
+  .text-sm-7 { font-size: 0.875rem; }
+  .text-sm-6 { font-size: 1rem; }
+  .text-sm-5 { font-size: 1.25rem; }
+  .text-sm-4 { font-size: 1.5rem; }
+}
+
+@media (min-width: 768px) {
+  .text-md-8 { font-size: 0.75rem; }
+  .text-md-7 { font-size: 0.875rem; }
+  .text-md-6 { font-size: 1rem; }
+  .text-md-5 { font-size: 1.25rem; }
+  .text-md-4 { font-size: 1.5rem; }
+}
+
+@media (min-width: 992px) {
+  .text-lg-8 { font-size: 0.75rem; }
+  .text-lg-7 { font-size: 0.875rem; }
+  .text-lg-6 { font-size: 1rem; }
+  .text-lg-5 { font-size: 1.25rem; }
+  .text-lg-4 { font-size: 1.5rem; }
+}
+
+td,
+th {
+    padding: 8px 4px !important;
+}
+
+.form-check-input:checked {
+  background-color: #000!important;
+  border-color: #000!important;    
+}
+.form-check-input:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
