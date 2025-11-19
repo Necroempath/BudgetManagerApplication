@@ -23,7 +23,7 @@ import { currencies, setCurrencies } from "./Repositories/currencies.js";
 import { setCurrenciesDropdown, setCurrency } from "./UI/currency.js";
 import { setCookie, getCookie, calculateTotals } from "./utils.js";
 import { initFilterHandler } from "./Services/operationFilter.js";
-
+import { initTransferHandlers } from "./Services/dataTransfer.js";
 setCategories(JSON.parse(loadCategories()));
 
 setCurrencies(JSON.parse(loadCurrencies()));
@@ -94,13 +94,10 @@ refreshTable();
 
 function validate(form) {
   const data = new FormData(form);
-  const cat = data.get('category');
+  const cat = data.get("category");
 
   const valid = form.checkValidity();
-  //   if (!cat) {
-  //   valid = false;
-  //   console.log('inv cat')
-  // }
+
   if (!valid) {
     form.classList.add("was-validated");
   } else {
@@ -212,7 +209,9 @@ function onFilterApplied(filterParams) {
     filtered = operations.filter((op) => op.type === filterParams.type);
   }
 
-  filtered = filtered.filter(op => filterParams.currencies.includes(op.currency.code));
+  filtered = filtered.filter((op) =>
+    filterParams.currencies.includes(op.currency.code)
+  );
   console.log(filtered);
   // filtered = filtered.filter(op => op.amount >= filterParams.minAmount && op.amount <= filterParams.maxAmount);
 
@@ -220,3 +219,5 @@ function onFilterApplied(filterParams) {
 
   filterOperations(filtered);
 }
+
+initTransferHandlers(refreshTable);
