@@ -14,7 +14,6 @@ import {
   operations,
   setOperations,
   removeOperation,
-  updateOperation,
 } from "./Repositories/operations.js";
 import { setCategories } from "./Repositories/categories.js";
 import { initSearchHandler } from "./UI/search.js";
@@ -22,8 +21,10 @@ import { setTotals } from "./UI/infoPanel.js";
 import { currencies, setCurrencies } from "./Repositories/currencies.js";
 import { setCurrenciesDropdown, setCurrency } from "./UI/currency.js";
 import { setCookie, getCookie, calculateTotals } from "./utils.js";
-import { initFilterHandler } from "./Services/operationFilter.js";
+import { initFilterHandler, setCurrencyToFilter } from "./Services/operationFilter.js";
 import { initTransferHandlers } from "./Services/dataTransfer.js";
+import { sortBy } from "./Services/sortHandler.js";
+
 setCategories(JSON.parse(loadCategories()));
 
 setCurrencies(JSON.parse(loadCurrencies()));
@@ -43,7 +44,7 @@ function filterOperations(filtered) {
     ...calculateTotals(filteredOperations, selectedCurrency),
     selectedCurrency.symbol
   );
-  refreshTable();
+  refreshTable(filteredOperations);
 }
 
 let selectedCurrency;
@@ -56,13 +57,13 @@ function setCurrencyFromCookie() {
   selectedCurrency = getCookie("currency");
 
   if (!selectedCurrency) {
-    setCookie("currency", JSON.stringify(currencies[0]), 7);
+    setCookie("currency", currencies[0], 7);
     selectedCurrency = currencies[0];
   }
   addForm.setCurrency(selectedCurrency);
 
   setCurrency(selectedCurrency.code);
-
+  setCurrencyToFilter(selectedCurrency);
   setTotals(
     ...calculateTotals(filteredOperations, selectedCurrency),
     selectedCurrency.symbol
@@ -81,16 +82,16 @@ function deleteOperation(id) {
   removeOperation(operation.id);
 }
 
-function refreshTable() {
+function refreshTable(data) {
   clearTable();
-  filteredOperations.forEach((op) => {
-    writeToTable(op, [editOperation, deleteOperation], [`${op.type}`, 2, 3, 4]);
+  data.forEach((item) => {
+    writeToTable(item, [editOperation, deleteOperation], [`${item.type}`, 2, 3, 4]);
   });
 }
 
 setCurrencyFromCookie();
 
-refreshTable();
+refreshTable(filteredOperations);
 
 function validate(form) {
   const data = new FormData(form);
@@ -117,7 +118,7 @@ function onEdit(form, formData) {
 
   operations[index] = formData;
 
-  refreshTable();
+  refreshTable(filteredOperations);
 
   setTotals(
     ...calculateTotals(filteredOperations, selectedCurrency),
@@ -142,30 +143,12 @@ function onAdding(form, formData) {
   );
 }
 
-let lastSortParam = null;
-
-function sortBy(param, type) {
-  if (lastSortParam === param) {
-    operations.reverse();
-  } else if (param === "amount") {
-    operations.sort(
-      (a, b) =>
-        a[`${param}`] * a["currency"].rate - b[`${param}`] * b["currency"].rate
-    );
-  } else {
-    if (type === "string") {
-      operations.sort((a, b) => a[`${param}`].localeCompare(b[`${param}`]));
-    } else if (type === "number") {
-      operations.sort((a, b) => a[`${param}`] - b[`${param}`]);
-    }
-  }
-
-  lastSortParam = param;
-
-  refreshTable();
+function onSorted(param, type) {
+  const sorted = sortBy(filteredOperations, param, type);
+  refreshTable(sorted);
 }
 
-initSortHandler(sortBy);
+initSortHandler(onSorted);
 
 function searchByName(name) {
   let filtered;
@@ -187,37 +170,18 @@ initSearchHandler(searchByName);
 function onCurrencySelected(index) {
   selectedCurrency = currencies[index];
 
-  setCookie("currency", JSON.stringify(selectedCurrency), 7);
+  setCookie("currency", selectedCurrency, 7);
 
   addForm.setCurrency(selectedCurrency);
   setTotals(
     ...calculateTotals(filteredOperations, selectedCurrency),
     selectedCurrency.symbol
   );
+
+  setCurrencyToFilter(selectedCurrency);
 }
 
-initFilterHandler(currencies, onFilterApplied);
-
-function onFilterApplied(filterParams) {
-  if (!filterParams) {
-    filterOperations(operations);
-  }
-
-  let filtered = [...operations];
-
-  if (filterParams.type >= 0) {
-    filtered = operations.filter((op) => op.type === filterParams.type);
-  }
-
-  filtered = filtered.filter((op) =>
-    filterParams.currencies.includes(op.currency.code)
-  );
-  console.log(filtered);
-  // filtered = filtered.filter(op => op.amount >= filterParams.minAmount && op.amount <= filterParams.maxAmount);
-
-  // filtered = filtered.filter(op => op.amount >= filterParams.minAmount && op.amount <= filterParams.maxAmount);
-
-  filterOperations(filtered);
-}
+initFilterHandler(currencies, filterOperations);
 
 initTransferHandlers(refreshTable);
+

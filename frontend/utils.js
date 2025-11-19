@@ -9,7 +9,7 @@ export function defineDateRange(min, max) {
   const maxDate = new Date(today);
   maxDate.setFullYear(today.getFullYear() + max);
 
-  return [format(minDate), format(maxDate)];
+  return [minDate, maxDate];
 }
 export function calculateTotals(operations, targetCurrency) {
   let totals = [0, 0];
@@ -26,7 +26,9 @@ export function calculateTotals(operations, targetCurrency) {
 }
 
 export function setCookie(name, value, days) {
-  document.cookie = `${name} =${value}; max-age = ${
+  const json = JSON.stringify(value);
+
+  document.cookie = `${name} =${json}; max-age = ${
     days * 24 * 3600
   }; path =\\`;
 }

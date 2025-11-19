@@ -16,7 +16,7 @@ const add = (operation) => {
 
 export const removeOperationBd = (id) => {
   const operations = load();
-  const index = operations.find((op) => op.id === id);
+  const index = operations.findIndex((op) => op.id == id);
   const removed = operations.splice(index, 1)[0];
 
   save(operations);

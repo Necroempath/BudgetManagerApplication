@@ -1,4 +1,4 @@
-import { operations,setOperations } from "../Repositories/operations.js";
+import { operations, setOperations } from "../Repositories/operations.js";
 
 export function exportToJson(fileName) {
   const jsonData = JSON.stringify(operations);
@@ -36,7 +36,7 @@ export function initTransferHandlers(onImport) {
       console.log(newOpers)
       localStorage.setItem("operations", JSON.stringify(newOpers));
       setOperations(newOpers);
-      onImport();
+      onImport(newOpers);
 
     } catch {
       alert("Invalid json");

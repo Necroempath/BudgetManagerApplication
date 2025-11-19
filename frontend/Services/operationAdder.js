@@ -13,6 +13,7 @@ export function createAddForm(onSubmit) {
   addForm.onTypeChanged(categories);
 
   addBtn.addEventListener("click", () => {
+    console.log(addForm.readForm())
     onSubmit(form, addForm.readForm());
   });
 
@@ -20,7 +21,7 @@ export function createAddForm(onSubmit) {
 }
 
 export function resetAddForm(){
-  form.reset;
+  form.reset();
 
   addForm.disableCategoryOptions();
   addForm.resetCategoryOptions();
