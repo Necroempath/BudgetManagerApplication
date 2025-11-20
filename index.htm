@@ -148,14 +148,14 @@
             <form id="filterForm" class="d-flex flex-column gap-4">
 
                 <div class="btn-group d-flex" role="group">
-                    <input type="radio" value=-1 class="btn-check" name="btnradio" id="all" autocomplete="off" checked>
-                    <label class="btn btn-outline-dark w-100 text-center" for="all">All</label>
-
                     <input type="radio" value=0 class="btn-check" name="btnradio" id="incomes" autocomplete="off">
                     <label class="btn btn-outline-dark w-100 text-center" for="incomes">Incomes</label>
 
                     <input type="radio" value=1 class="btn-check" name="btnradio" id="expenses" autocomplete="off">
                     <label class="btn btn-outline-dark w-100 text-center" for="expenses">Expenses</label>
+
+                    <input type="radio" value=-1 class="btn-check" name="btnradio" id="all" autocomplete="off" checked>
+                    <label class="btn btn-outline-dark w-100 text-center" for="all">All</label>
                 </div>
                 <fieldset class="border p-3 rounded">
                     <legend class="float-none w-auto px-2">Сurrencies</legend>
@@ -167,8 +167,8 @@
                     <div class="col-6">
                         <label for="minAmount" class="form-label">Min amount</label>
                         <div class="input-group">
-                            <span class="input-group-text crnc">$</span>
-                            <input type="number" class="form-control" id="minAmount" name="minAmount" placeholder="0"
+                            <span class="input-group-text crnc"></span>
+                            <input id="minAmount" type="number" class="form-control" id="minAmount" name="minAmount" placeholder="0"
                                 min="0" step="0.01">
                             <div class="invalid-feedback">Enter amount more or equal to 0.</div>
                         </div>
@@ -178,9 +178,8 @@
                     <div class="col-6">
                         <label for="maxAmount" class="form-label">Max amount</label>
                         <div class="input-group">
-                            <span class="input-group-text crnc">$</span>
-
-                            <input type="number" class="form-control" name="maxAmount" id="maxAmount" min="0"
+                            <span class="input-group-text crnc"></span>
+                            <input id="maxAmount" type="number" class="form-control" name="maxAmount" id="maxAmount" min="0"
                                 step="0.01">
                             <div class="invalid-feedback">Max amount must be more or equal to min amount.</div>
                         </div>
@@ -189,8 +188,8 @@
 
                 <div class="row g-3">
                     <div class="col-6">
-                        <label for="dateFrom" class="form-label">Date from</label>
-                        <input type="date" class="form-control" name="dateFrom" id="dateFrom">
+                        <label id="dateFrom" for="dateFrom" class="form-label">Date from</label>
+                        <input id="'dateTo" type="date" class="form-control" name="dateFrom" id="dateFrom">
                     </div>
 
                     <div class="col-6">

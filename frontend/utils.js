@@ -9,7 +9,7 @@ export function defineDateRange(min, max) {
   const maxDate = new Date(today);
   maxDate.setFullYear(today.getFullYear() + max);
 
-  return [minDate, maxDate];
+  return [format(minDate), format(maxDate)];
 }
 export function calculateTotals(operations, targetCurrency) {
   let totals = [0, 0];

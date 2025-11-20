@@ -21,7 +21,7 @@ import { setTotals } from "./UI/infoPanel.js";
 import { currencies, setCurrencies } from "./Repositories/currencies.js";
 import { setCurrenciesDropdown, setCurrency } from "./UI/currency.js";
 import { setCookie, getCookie, calculateTotals } from "./utils.js";
-import { initFilterHandler, setCurrencyToFilter } from "./Services/operationFilter.js";
+import { initFilterHandler, setCurrencyToFilter, filterOperations } from "./Services/operationFilter.js";
 import { initTransferHandlers } from "./Services/dataTransfer.js";
 import { sortBy } from "./Services/sortHandler.js";
 
@@ -38,16 +38,23 @@ setCurrenciesDropdown(
 
 let filteredOperations = operations;
 
-function filterOperations(filtered) {
+function onFiltering(filtered) {
   filteredOperations = filtered;
-  setTotals(
-    ...calculateTotals(filteredOperations, selectedCurrency),
+  
+  render(filtered);
+}
+
+function render(operations){
+    setTotals(
+    ...calculateTotals(operations, selectedCurrency),
     selectedCurrency.symbol
   );
-  refreshTable(filteredOperations);
+
+  refreshTable(operations);
 }
 
 let selectedCurrency;
+let searchResults;
 
 const addForm = createAddForm((form, formData) => onAdding(form, formData));
 
@@ -73,7 +80,7 @@ function setCurrencyFromCookie() {
 function editOperation(id) {
   showModal(
     editForm,
-    operations.find((op) => op.id == id)
+    filteredOperations.find((op) => op.id == id)
   );
 }
 
@@ -118,7 +125,7 @@ function onEdit(form, formData) {
 
   operations[index] = formData;
 
-  refreshTable(filteredOperations);
+  onFiltering(filterOperations());
 
   setTotals(
     ...calculateTotals(filteredOperations, selectedCurrency),
@@ -151,18 +158,16 @@ function onSorted(param, type) {
 initSortHandler(onSorted);
 
 function searchByName(name) {
-  let filtered;
-
   if (!name) {
-    filtered = operations;
+    searchResults = filteredOperations;
   } else {
     const normalized = name.toLowerCase().trim();
-    filtered = operations.filter((op) =>
+    searchResults = filteredOperations.filter((op) =>
       op.name.toLowerCase().trim().includes(normalized)
     );
   }
 
-  filterOperations(filtered);
+  render(searchResults);
 }
 
 initSearchHandler(searchByName);
@@ -181,7 +186,7 @@ function onCurrencySelected(index) {
   setCurrencyToFilter(selectedCurrency);
 }
 
-initFilterHandler(currencies, filterOperations);
+onFiltering(initFilterHandler(currencies, onFiltering));
 
-initTransferHandlers(refreshTable);
+initTransferHandlers(filterOperations);
 

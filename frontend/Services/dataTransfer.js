@@ -33,7 +33,7 @@ export function initTransferHandlers(onImport) {
 
     try {
       const newOpers = JSON.parse(text);
-      console.log(newOpers)
+     
       localStorage.setItem("operations", JSON.stringify(newOpers));
       setOperations(newOpers);
       onImport(newOpers);

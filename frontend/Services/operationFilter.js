@@ -3,17 +3,19 @@ import { operations } from "../Repositories/operations.js";
 
 const form = document.querySelector("#filterForm");
 
-const canvas = new bootstrap.Offcanvas(document.querySelector('#offcanvasExample'));
+const canvas = new bootstrap.Offcanvas(
+  document.querySelector("#offcanvasExample")
+);
 
 const clearFormBtn = document.querySelector("#clearForm");
 const resetFiltersBtn = document.querySelector("#resetFilters");
 const applyFiltersBtn = document.querySelector("#applyFilters");
 const currencyInput = document.querySelector("#currencyInput");
 const dateFrom = document.querySelector("#dateFrom");
-const crncSymbol = document.querySelectorAll('.crnc');
+const crncSymbol = document.querySelectorAll(".crnc");
 
-let filterParams;
-let selectedCurrency = getCookie('currency');
+let filterParams = getCookie("Filtering parameters");
+let selectedCurrency = getCookie("currency");
 
 export function initFilterHandler(currencies, onFiltersApplied) {
   const [min, max] = defineDateRange(3, 0);
@@ -37,7 +39,7 @@ export function initFilterHandler(currencies, onFiltersApplied) {
 
     canvas.hide();
 
-    setCookie('Filtering parameters', filterParams, 7);
+    setCookie("Filtering parameters", filterParams, 7);
 
     onFiltersApplied(filterOperations());
   });
@@ -45,36 +47,45 @@ export function initFilterHandler(currencies, onFiltersApplied) {
   resetFiltersBtn.addEventListener("click", () => {
     canvas.hide();
 
-    setCookie('Filtering parameters', null, 7);
+    setCookie("Filtering parameters", null, 7);
     filterParams = null;
     onFiltersApplied(operations);
   });
+
+  return initialFilterSetup();
 }
 
 export function filterOperations(data = operations) {
-  filterParams = filterParams || getCookie('Filtering parameters');
   if (!filterParams) return data;
 
   let copy = [...data];
 
   if (filterParams.type >= 0) {
     copy = copy.filter((op) => op.type === filterParams.type);
-
   }
 
   copy = copy.filter((op) =>
     filterParams.currencies.includes(op.currency.code)
   );
-  copy = copy.filter(op => op.amount * op.currency.rate >= filterParams.minAmount * selectedCurrency.rate && op.amount * op.currency.rate <= filterParams.maxAmount * selectedCurrency.rate);
 
-  copy = copy.filter(op => op.date >= filterParams.dateFrom && op.date <= filterParams.dateTo);
+  copy = copy.filter(
+    (op) =>
+      op.amount * op.currency.rate >=
+        filterParams.minAmount * selectedCurrency.rate &&
+      op.amount * op.currency.rate <=
+        filterParams.maxAmount * selectedCurrency.rate
+  );
+
+  copy = copy.filter(
+    (op) => op.date >= filterParams.dateFrom && op.date <= filterParams.dateTo
+  );
 
   return copy;
 }
 
 export function setCurrencyToFilter(currency) {
   selectedCurrency = currency;
-  crncSymbol.forEach(item => item.textContent = currency.symbol);
+  crncSymbol.forEach((item) => (item.textContent = currency.symbol));
 }
 
 function createCurrencyInputs(currencies) {
@@ -88,7 +99,7 @@ function createCurrencyInputs(currencies) {
     const input = document.createElement("input");
     input.type = "checkbox";
     input.className = "form-check-input";
-    input.id = `curr-${currency.code}`;
+    input.id = `crncy-${currency.code}`;
     input.value = currency.code;
     input.name = "currency";
     input.checked = true;
@@ -123,10 +134,10 @@ function validate(data) {
     maxAmountInput.classList.add("is-invalid");
     valid = false;
   }
+  const [minDate, maxDate] = defineDateRange(3, 0);
 
-  const dateFrom = document.querySelector("#dateFrom").value || new Date();
-  const dateTo =
-    document.querySelector("#dateTo").value || new Date(8640000000000000);
+  const dateFrom = document.querySelector("#dateFrom").value || minDate;
+  const dateTo = document.querySelector("#dateTo").value || maxDate;
   const dateToInput = document.querySelector("#dateTo");
   dateToInput.classList.remove("is-invalid");
 
@@ -144,7 +155,29 @@ function validate(data) {
       dateFrom: dateFrom,
       dateTo: dateTo,
     };
-  }
-  else return null;
+  } else return null;
+}
 
+function initialFilterSetup() {
+  if (!filterParams) return operations;
+
+  [...form.querySelectorAll('[name="btnradio"]')].at(
+    filterParams.type
+  ).checked = true;
+
+  form.querySelectorAll('[name="currency"]').forEach((box) => {
+    box.checked = false;
+
+    if (filterParams.currencies.includes(box.value)) {
+      box.checked = true;
+    }
+  });
+
+  form.querySelector("#minAmount").value = filterParams.minAmount || "";
+  form.querySelector("#maxAmount").value = filterParams.maxAmount || "";
+
+  form.querySelector("#dateFrom").value = filterParams.dateFrom || "";
+  form.querySelector("#dateTo").value = filterParams.dateTo || "";
+
+  return filterOperations(operations);
 }

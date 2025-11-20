@@ -1,0 +1,197 @@
+[
+    {
+        "type": "1",
+        "category": "Groceries",
+        "name": "apples",
+        "amount": "5000",
+        "date": "2025-11-12",
+        "currency": {
+            "code": "RUB",
+            "symbol": "₽",
+            "rate": 0.02
+        },
+        "id": 1
+    },
+    {
+        "type": "0",
+        "category": "Gifts",
+        "name": "present",
+        "amount": "180.55",
+        "date": "2025-11-13",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 2
+    },
+    {
+        "type": "1",
+        "category": "Rent / Mortgage",
+        "name": "house",
+        "amount": "100",
+        "date": "2025-11-07",
+        "currency": {
+            "code": "AZN",
+            "symbol": "₼",
+            "rate": 1
+        },
+        "id": 3
+    },
+    {
+        "type": "1",
+        "category": "Transport",
+        "name": "taxi",
+        "amount": "15",
+        "date": "2025-11-08",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 5
+    },
+    {
+        "type": "0",
+        "category": "Gifts",
+        "name": "mi",
+        "amount": "15",
+        "date": "2025-11-01",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 6
+    },
+    {
+        "type": "1",
+        "category": "Beauty / Care",
+        "name": "joy-mask",
+        "amount": "1000",
+        "date": "2025-11-08",
+        "currency": {
+            "code": "RUB",
+            "symbol": "₽",
+            "rate": 0.02
+        },
+        "id": 7
+    },
+    {
+        "type": "0",
+        "category": "Salary",
+        "name": "Sahib",
+        "amount": "1200",
+        "date": "2025-11-07",
+        "currency": {
+            "code": "RUB",
+            "symbol": "₽",
+            "rate": 0.02
+        },
+        "id": 8
+    },
+    {
+        "type": "1",
+        "category": "Education",
+        "name": "step it",
+        "amount": "500",
+        "date": "2025-11-11",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 9
+    },
+    {
+        "type": "0",
+        "category": "Freelance / Side Job",
+        "name": "my new side",
+        "amount": "87.6",
+        "date": "2025-11-14",
+        "currency": {
+            "code": "AZN",
+            "symbol": "₼",
+            "rate": 1
+        },
+        "id": 10
+    },
+    {
+        "type": "1",
+        "category": "Utilities",
+        "name": "electricity",
+        "amount": "455",
+        "date": "2025-11-15",
+        "currency": {
+            "code": "RUB",
+            "symbol": "₽",
+            "rate": 0.02
+        },
+        "id": 11
+    },
+    {
+        "type": "0",
+        "category": "Business / Sales",
+        "name": "Sahib",
+        "amount": "88.76",
+        "date": "2025-11-07",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 12
+    },
+    {
+        "type": "1",
+        "category": "Health / Medicine",
+        "name": "carbone",
+        "amount": "14.65",
+        "date": "2025-11-08",
+        "currency": {
+            "code": "AZN",
+            "symbol": "₼",
+            "rate": 1
+        },
+        "id": 13
+    },
+    {
+        "type": "0",
+        "category": "Salary",
+        "name": "job",
+        "amount": "500",
+        "date": "2025-11-01",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 14
+    },
+    {
+        "type": "0",
+        "category": "Business / Sales",
+        "name": "Sahib",
+        "amount": "5",
+        "date": "2025-11-07",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 15
+    },
+    {
+        "type": "0",
+        "category": "Business / Sales",
+        "name": "doesn't matter",
+        "amount": "33",
+        "date": "2025-11-08",
+        "currency": {
+            "code": "USD",
+            "symbol": "$",
+            "rate": 1.68
+        },
+        "id": 14
+    }
+]
