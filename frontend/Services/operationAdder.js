@@ -13,7 +13,6 @@ export function createAddForm(onSubmit) {
   addForm.onTypeChanged(categories);
 
   addBtn.addEventListener("click", () => {
-    console.log(addForm.readForm())
     onSubmit(form, addForm.readForm());
   });
 
