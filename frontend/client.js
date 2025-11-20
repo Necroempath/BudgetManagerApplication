@@ -188,5 +188,9 @@ function onCurrencySelected(index) {
 
 onFiltering(initFilterHandler(currencies, onFiltering));
 
-initTransferHandlers(filterOperations);
+initTransferHandlers(onImport);
+
+function onImport(ops){
+  onFiltering(filterOperations(ops));
+}
 
