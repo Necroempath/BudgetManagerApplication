@@ -1,30 +1,34 @@
-import { hashPassword, verifyPassword } from '../hashing/hashing.js'
+import { hashPassword, verifyPassword } from "../hashing/hashing.js";
+import { saveUser } from "../backend/usersServer.js";
+
 const regForm = document.querySelector("#regForm");
 const loginForm = document.querySelector("#loginForm");
-const cpass = document.querySelector("#cpassword");
+const cpass = regForm.querySelector("#cpassword");
 
-document.querySelector("#regBtn").addEventListener("click", async e => {
+document.querySelector("#regBtn").addEventListener("click", async (e) => {
   e.preventDefault();
   const data = new FormData(regForm);
 
   const defValidate = validateDefault();
   const passValidate = validatePassword(data);
 
-  if(!defValidate || !passValidate) {
+  if (!defValidate || !passValidate) {
     return;
   }
 
-  const {salt, hash} = await hashPassword(cpass.value);
+  const { salt, hash } = await hashPassword(cpass.value);
 
   const user = {
-    email: data.get('email'),
-    name: data.get('name'),
+    email: data.get("email"),
+    name: data.get("name"),
     salt: salt,
     hash: hash,
-    remember: data.get('remember'),
-    date: new Date()
-  }
+    remember: data.get("remember"),
+    date: new Date(),
+  };
 
+  const report = saveUser(JSON.stringify(user));
+  validateBusy(report);
 });
 
 function validatePassword(data) {
@@ -41,9 +45,32 @@ function validatePassword(data) {
   return true;
 }
 
+function validateBusy(report) {
+  regForm
+    .querySelectorAll(".busy")
+    .forEach((el) => el.classList.remove("d-none"));
+
+  regForm
+    .querySelectorAll(".non-busy")
+    .forEach((el) => el.classList.add("d-none"));
+
+  report.forEach((token) =>
+    regForm.querySelector(`[name="${token}"]`).classList.add("is-invalid")
+  );
+}
+
 function validateDefault() {
   const inputs = regForm.querySelectorAll("input");
-let valid = true;
+  let valid = true;
+
+  document
+    .querySelectorAll(".busy")
+    .forEach((el) => el.classList.add("d-none"));
+
+  document
+    .querySelectorAll(".non-busy")
+    .forEach((el) => el.classList.remove("d-none"));
+
   inputs.forEach((input) => {
     input.classList.remove("is-invalid", "is-valid");
 

@@ -21,13 +21,15 @@
                 <div class="mb-3">
                     <input type="text" id="email" name="email" class="form-control" placeholder="Email"
                         pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}" required>
-                    <div class="invalid-feedback">Please enter a valid email.</div>
+                    <div class="invalid-feedback non-busy d-none">Please enter a valid email.</div>
+                    <div class="invalid-feedback busy d-none">Email already exists.</div>
                 </div>
 
                 <div class="mb-3">
                     <input type="text" id="name" name="name" class="form-control" placeholder="Username"
                         pattern="^[A-Za-z0-9]{4,}$" required>
-                    <div class="invalid-feedback">Name length must be at least 4 chars.</div>
+                    <div class="invalid-feedback non-busy d-none">Name length must be at least 4 chars.</div>
+                    <div class="invalid-feedback busy d-none">Username already exists.</div>
                 </div>
 
                 <div class="mb-3">
@@ -45,7 +47,7 @@
 
                 <div class="mb-3 row justify-content-between">
                     <div class="col-xl-7 col-lg-12">
-                        <a href="">I already have an account</a>
+                        <a id="loginNav" href="">I already have an account</a>
 
                     </div>
                     <div class="to-end d-flex gap-2 align-items-center col-xl-5">
