@@ -1,4 +1,4 @@
-import { verifyPassword } from "../hashing/hashing";
+import { verifyPassword } from "../hashing/hashing.js";
 const users = JSON.parse(localStorage.getItem("users")) || [];
 const save = (users) => localStorage.setItem("users", JSON.stringify(users));
 

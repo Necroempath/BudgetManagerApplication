@@ -1,4 +1,4 @@
-import { hashPassword, verifyPassword } from "../hashing/hashing.js";
+import { hashPassword } from "../hashing/hashing.js";
 import { saveUser } from "../backend/usersServer.js";
 
 const regForm = document.querySelector("#regForm");
@@ -85,4 +85,10 @@ function validateDefault() {
 
   return valid;
 }
-document.querySelector("#loginBtn");
+
+document.querySelectorAll(".switchTabs").forEach((a) =>
+  a.addEventListener("click", () => {
+    document.querySelector('#regCard').classList.toggle("d-none");
+    document.querySelector('#loginCard').classList.toggle("d-none");
+  })
+);
