@@ -1,8 +1,9 @@
+import { hashPassword, verifyPassword } from '../hashing/hashing.js'
 const regForm = document.querySelector("#regForm");
 const loginForm = document.querySelector("#loginForm");
 const cpass = document.querySelector("#cpassword");
 
-document.querySelector("#regBtn").addEventListener("click", (e) => {
+document.querySelector("#regBtn").addEventListener("click", async e => {
   e.preventDefault();
   const data = new FormData(regForm);
 
@@ -13,7 +14,17 @@ document.querySelector("#regBtn").addEventListener("click", (e) => {
     return;
   }
 
-  
+  const {salt, hash} = await hashPassword(cpass.value);
+
+  const user = {
+    email: data.get('email'),
+    name: data.get('name'),
+    salt: salt,
+    hash: hash,
+    remember: data.get('remember'),
+    date: new Date()
+  }
+
 });
 
 function validatePassword(data) {
