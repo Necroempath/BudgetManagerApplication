@@ -1,4 +1,4 @@
-import { verifyPassword } from "../hashing/hashing.js";
+import { verifyPassword } from "./hashing/hashing.js"
 const users = JSON.parse(localStorage.getItem("users")) || [];
 const save = (users) => localStorage.setItem("users", JSON.stringify(users));
 
@@ -15,7 +15,7 @@ export function saveUser(userJSON) {
   return report;
 }
 
-export function authorize(userJSON) {
+export async function authorize(userJSON) {
   const user = JSON.parse(userJSON);
   const searchRes = users.find((u) => u.name === user.name);
 
@@ -23,14 +23,12 @@ export function authorize(userJSON) {
     return null;
   }
 
-  if (
-    verifyPassword(user.password, searchRes.hash, searchRes.salt) !==
-    searchRes.hash
+  if (!await verifyPassword(user.password, searchRes.hash, searchRes.salt)
   ) {
     return null;
   }
 
-  return searchRes;
+  return JSON.stringify(searchRes);
 }
 
 function remember(user) {

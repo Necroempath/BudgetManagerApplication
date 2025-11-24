@@ -1,4 +1,4 @@
-export async function hashPassword(password, salt = null) {
+async function hashPassword(password, salt = null) {
     const enc = new TextEncoder();
     if (!salt) {
         salt = crypto.getRandomValues(new Uint8Array(16));
@@ -26,4 +26,9 @@ export async function hashPassword(password, salt = null) {
         salt: btoa(String.fromCharCode(...salt)),
         hash: btoa(String.fromCharCode(...new Uint8Array(hashBuffer)))
     };
+}
+
+export async function verifyPassword(password, savedHash, savedSalt) {
+    const result = await hashPassword(password, Uint8Array.from(atob(savedSalt), c => c.charCodeAt(0)));
+    return result.hash === savedHash;
 }
