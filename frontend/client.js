@@ -25,11 +25,13 @@ import { initFilterHandler, setCurrencyToFilter, filterOperations } from "./Serv
 import { initTransferHandlers } from "./Services/dataTransfer.js";
 import { sortBy } from "./Services/sortHandler.js";
 
+const user = getCookie('user');
+
 setCategories(JSON.parse(loadCategories()));
 
 setCurrencies(JSON.parse(loadCurrencies()));
 
-setOperations(JSON.parse(loadOperations()));
+setOperations(JSON.parse(loadOperations(user.name)));
 
 setCurrenciesDropdown(
   currencies.map((c) => c.code),
@@ -85,7 +87,7 @@ function editOperation(id) {
 }
 
 function deleteOperation(id) {
-  const operation = removeOperationBd(id);
+  const operation = removeOperationBd(id, user.name);
   removeOperation(operation.id);
 }
 
@@ -121,7 +123,7 @@ function onEdit(form, formData) {
   }
 
   hideModal();
-  const index = updateOperationBd(JSON.stringify(formData));
+  const index = updateOperationBd(JSON.stringify(formData), user.name);
 
   operations[index] = formData;
 
@@ -140,7 +142,7 @@ function onAdding(form, formData) {
 
   resetAddForm();
 
-  const operation = JSON.parse(saveOperation(JSON.stringify(formData)));
+  const operation = JSON.parse(saveOperation(JSON.stringify(formData), user.name));
   operations.push(operation);
 
   writeToTable(

@@ -116,7 +116,7 @@ document.querySelector("#loginBtn").addEventListener("click", async e => {
     password: data.get("password"),
   };
 
-  const authorized = await authorize(JSON.stringify(user));
+  const authorized = JSON.parse(await authorize(JSON.stringify(user)));
 
   if (!authorized) {
     validateBusy(['name', 'password'], loginForm)

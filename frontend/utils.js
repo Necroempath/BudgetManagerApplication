@@ -33,11 +33,12 @@ export function setCookie(name, value, days) {
   }; path =\\`;
 }
 
-export function getCookie(name) {
+export function getCookie(name) { 
   const cookies = document.cookie.split("; ");
 
   const cookie = cookies.find((c) => c.startsWith(name + "="));
 
   if (!cookie) return null;
-  return JSON.parse(cookie.split("=")[1]);
+
+  return JSON.parse(cookie.slice(name.length + 1));
 }
