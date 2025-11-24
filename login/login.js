@@ -114,6 +114,7 @@ document.querySelector("#loginBtn").addEventListener("click", async e => {
   const user = {
     name: data.get("name"),
     password: data.get("password"),
+    remember: data.get("remember")
   };
 
   const authorized = JSON.parse(await authorize(JSON.stringify(user)));

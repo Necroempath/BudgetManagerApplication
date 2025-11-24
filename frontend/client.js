@@ -27,6 +27,9 @@ import { sortBy } from "./Services/sortHandler.js";
 
 const user = getCookie('user');
 
+if(!user.remember) {
+  window.location.href = 'login.htm';
+}
 setCategories(JSON.parse(loadCategories()));
 
 setCurrencies(JSON.parse(loadCurrencies()));
@@ -196,3 +199,6 @@ function onImport(ops){
   onFiltering(filterOperations(ops));
 }
 
+document.querySelector('#logoutBtn').addEventListener('click', () => {
+  window.location.href = 'login.htm';
+})
