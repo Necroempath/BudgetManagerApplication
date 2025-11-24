@@ -27,7 +27,7 @@ import { sortBy } from "./Services/sortHandler.js";
 
 const user = getCookie('user');
 
-if(!user.remember) {
+if(!user) {
   window.location.href = 'login.htm';
 }
 setCategories(JSON.parse(loadCategories()));
@@ -200,5 +200,7 @@ function onImport(ops){
 }
 
 document.querySelector('#logoutBtn').addEventListener('click', () => {
+  user.remember = false;
+  setCookie('user', user, 7);
   window.location.href = 'login.htm';
 })

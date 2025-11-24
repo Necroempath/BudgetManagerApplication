@@ -27,7 +27,8 @@ export async function authorize(userJSON) {
   ) {
     return null;
   }
-
+  
+  searchRes.remember = user.remember;
   return JSON.stringify(searchRes);
 }
 

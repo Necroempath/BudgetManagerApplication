@@ -1,10 +1,15 @@
 import { hashPassword } from "../hashing/hashing.js";
 import { saveUser, authorize } from "../backend/usersServer.js";
-import { setCookie } from "../frontend/utils.js";
+import { setCookie, getCookie } from "../frontend/utils.js";
 
 const regForm = document.querySelector("#regForm");
 const loginForm = document.querySelector("#loginForm");
 const cpass = regForm.querySelector("#cpassword");
+
+const user = getCookie('user');
+if(user.remember) {
+  window.location.href = 'index.htm';
+}
 
 document.querySelector("#regBtn").addEventListener("click", async (e) => {
   e.preventDefault();
